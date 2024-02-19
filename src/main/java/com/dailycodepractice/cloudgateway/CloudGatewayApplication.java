@@ -16,12 +16,11 @@ public class CloudGatewayApplication {
 		SpringApplication.run(CloudGatewayApplication.class, args);
 	}
 
-	/*
-	 * @Bean public Customizer<ReactiveResilience4JCircuitBreakerFactory>
-	 * defaultCustomizer() { return factory -> factory.configureDefault(id -> new
-	 * Resilience4JConfigBuilder(id)
-	 * .circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
-	 * .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.
-	 * ofSeconds(4)).build()).build()); }
-	 */
+	@Bean
+	public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer() {
+		return factory -> factory.configureDefault(id -> new Resilience4JConfigBuilder(id)
+				.circuitBreakerConfig(CircuitBreakerConfig.ofDefaults())
+				.build());
+	}
+
 }

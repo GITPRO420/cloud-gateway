@@ -3,8 +3,8 @@ server:
 
 spring:
   application:
-    name: API-GATEWAY
-  config:
+    name: API-GATEWAY 
+  config: 
     import: configserver:http://localhost:9296
   cloud:
     gateway:
@@ -15,7 +15,7 @@ spring:
           predicates:
           - path=/order/**
           filters:
-          - name: CircutBreaker
+          - name: CircuitBreaker
           - args:
               name: ORDER-SERVICE
               fallbackuri: forward:/orderservicefallback
@@ -25,7 +25,7 @@ spring:
           predicates:
           - path=/product/**
           filters:
-          - name: CircutBreaker
+          - name: CircuitBreaker
           - args:
               name: PRODUCT-SERVICE
               fallbackuri: forward:/productservicefallback
@@ -35,7 +35,7 @@ spring:
           predicates:
           - path=/payment/**
           filters:
-          - name: CircutBreaker
+          - name: CircuitBreaker
           - args:
               name: PAYMENT-SERVICE
               fallbackuri: forward:/paymentservicefallback
