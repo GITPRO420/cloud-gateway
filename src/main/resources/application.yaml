@@ -1,0 +1,43 @@
+server:
+ port: 9090	
+
+spring:
+  application:
+    name: API-GATEWAY
+  config:
+    import: configserver:http://localhost:9296
+  cloud:
+    gateway:
+      mvc:
+        routes:
+        - id: ORDER-SERVICE
+          uri: lb://ORDER-SERVICE
+          predicates:
+          - path=/order/**
+          filters:
+          - name: CircutBreaker
+          - args:
+              name: ORDER-SERVICE
+              fallbackuri: forward:/orderservicefallback
+              
+        - id: PRODUCT-SERVICE
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+          - path=/product/**
+          filters:
+          - name: CircutBreaker
+          - args:
+              name: PRODUCT-SERVICE
+              fallbackuri: forward:/productservicefallback
+          
+        - id: PAYMENT-SERVICE
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+          - path=/payment/**
+          filters:
+          - name: CircutBreaker
+          - args:
+              name: PAYMENT-SERVICE
+              fallbackuri: forward:/paymentservicefallback
+          
+       
